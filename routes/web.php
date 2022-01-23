@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\HomepageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,10 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::group(['prefix' => '', 'as' => 'homepage.'], function () {
+    Route::get('/',  [HomepageController::class, 'index'])->name('main');
 });
 
 Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
