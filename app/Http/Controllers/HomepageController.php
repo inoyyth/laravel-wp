@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Automattic\WooCommerce\Client;
 
 class HomepageController extends Controller
 {
@@ -14,8 +15,21 @@ class HomepageController extends Controller
      */
     public function index()
     {
-        $posts =  json_decode(Http::get('http://wordpress/index.php/wp-json/wp/v2/posts/')->body());
-       
+        // $posts =  json_decode(Http::get('http://wordpress/index.php/wp-json/wp/v2/posts/')->body());
+        $woocommerce = new Client(
+            'http://wordpress',
+            'ck_8b5afefdc9133d20a1c2e631311ae7f8c4db65cd',
+            'cs_ce829237d6bd5cb5c66d2db027071fcf7ce13dd1',
+            [
+                'wp_api' => true,
+                'version' => 'wc/v3',
+                'query_string_auth' => true, // Force Basic Authentication as query string true and using under HTTPS
+                'verify_ssl' => false
+            ]
+        );
+
+        $dt = $woocommerce->get('products/categories');
+
         return view('pages.homepage.main', compact('posts'));
     }
 
