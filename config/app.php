@@ -231,5 +231,17 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
+    /*
+    |--------------------------------------------------------------------------
+    | Custom ENV
+    |--------------------------------------------------------------------------
+    |
+    | The service providers listed here will be automatically loaded on the
+    | request to your application. Feel free to add your own services to
+    | this array to grant expanded functionality to your applications.
+    |
+    */
+    'wp_base' => env('WP_BASE'),
+    'wp_api_url' => env('WP_API_URL'),
+    'wp_api_inoy' => env('WP_API_INOY'),
 ];

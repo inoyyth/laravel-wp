@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('content')
+
+    <!-- Featured Start -->
+    <!-- @include('pages.homepage.component.slider') -->
+    <!-- Featured End -->
+
     <!-- Featured Start -->
     @include('pages.homepage.component.featured')
     <!-- Featured End -->

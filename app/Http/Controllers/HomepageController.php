@@ -29,8 +29,10 @@ class HomepageController extends Controller
         );
 
         $dt = $woocommerce->get('products/categories');
+        $request_slider =  json_decode(Http::get('http://wordpress/index.php/wp-json/wp/v2/announcements/?slug=home-page-slider')->body());
+        $slider = $request_slider[0]->acf->announcement_slider;
 
-        return view('pages.homepage.main', compact('posts'));
+        return view('pages.homepage.main', compact('dt', 'slider'));
     }
 
     /**

@@ -15,8 +15,8 @@ class ProductController extends Controller
     public function index()
     {
         $posts =  json_decode(Http::get('http://wordpress/index.php/wp-json/wp/v2/posts/')->body());
-       
-        return view('product.main', compact('posts'));
+        
+        return view('pages.product.main', compact('posts'));
     }
 
     /**
