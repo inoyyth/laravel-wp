@@ -17,9 +17,9 @@ class HomepageController extends Controller
     {
         // $posts =  json_decode(Http::get('http://wordpress/index.php/wp-json/wp/v2/posts/')->body());
         $woocommerce = new Client(
-            'http://wordpress',
-            'ck_8b5afefdc9133d20a1c2e631311ae7f8c4db65cd',
-            'cs_ce829237d6bd5cb5c66d2db027071fcf7ce13dd1',
+            'http://localhost:8000',
+            'ck_c7ee1e7ed5a00cf190b13dddfd65fb418f7d9405',
+            'cs_256d1fbd6ef4fb8a9460fb8a4b405e4a6a3248b7',
             [
                 'wp_api' => true,
                 'version' => 'wc/v3',
