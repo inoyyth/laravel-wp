@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $menu = json_decode(Http::get(config('app.wp_api_inoy') . 'main-menu')->body());
+        $menu = json_decode(Http::get(config('app.wp_api_inoy') . 'menu?slug=main-menu')->body());
         View::share('main_menu', $menu);
     }
 }

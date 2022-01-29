@@ -244,4 +244,6 @@ return [
     'wp_base' => env('WP_BASE'),
     'wp_api_url' => env('WP_API_URL'),
     'wp_api_inoy' => env('WP_API_INOY'),
+    'woocommerce_ck' => env('WOOCOMMERCE_CK'),
+    'woocommerce_cs' => env('WOOCOMMERCE_CS'),
 ];

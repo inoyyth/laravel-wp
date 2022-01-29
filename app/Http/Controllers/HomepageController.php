@@ -17,9 +17,9 @@ class HomepageController extends Controller
     {
         // $posts =  json_decode(Http::get('http://wordpress/index.php/wp-json/wp/v2/posts/')->body());
         $woocommerce = new Client(
-            'http://localhost:8000',
-            'ck_c7ee1e7ed5a00cf190b13dddfd65fb418f7d9405',
-            'cs_256d1fbd6ef4fb8a9460fb8a4b405e4a6a3248b7',
+            config('app.wp_base'),
+            config('app.woocommerce_ck'),
+            config('app.woocommerce_sk'),
             [
                 'wp_api' => true,
                 'version' => 'wc/v3',
@@ -29,7 +29,7 @@ class HomepageController extends Controller
         );
 
         $dt = $woocommerce->get('products/categories');
-        $request_slider =  json_decode(Http::get('http://wordpress/index.php/wp-json/wp/v2/announcements/?slug=home-page-slider')->body());
+        $request_slider =  json_decode(Http::get(config('app.wp_api_url') . 'announcements/?slug=home-page-slider')->body());
         $slider = $request_slider[0]->acf->announcement_slider;
 
         return view('pages.homepage.main', compact('dt', 'slider'));
