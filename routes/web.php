@@ -28,3 +28,10 @@ Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
     // Route::get('/data-table', ['uses' => 'TimeManagementController@index'])->name('data-table');
     // Route::get('/print', ['uses' => 'TimeManagementController@print'])->name('print');
 });
+
+Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
+    Route::get('/{slug}',  [ProductController::class, 'index'])->name('main');
+    // Route::get('/data-table', ['uses' => 'TimeManagementController@index'])->name('data-table');
+    // Route::get('/print', ['uses' => 'TimeManagementController@print'])->name('print');
+});
+

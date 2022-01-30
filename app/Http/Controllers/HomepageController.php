@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Automattic\WooCommerce\Client;
+use App\Library\Services\Woocommerce;
 
 class HomepageController extends Controller
 {
@@ -15,24 +15,11 @@ class HomepageController extends Controller
      */
     public function index()
     {
-        // $posts =  json_decode(Http::get('http://wordpress/index.php/wp-json/wp/v2/posts/')->body());
-        $woocommerce = new Client(
-            config('app.wp_base'),
-            config('app.woocommerce_ck'),
-            config('app.woocommerce_sk'),
-            [
-                'wp_api' => true,
-                'version' => 'wc/v3',
-                'query_string_auth' => true, // Force Basic Authentication as query string true and using under HTTPS
-                'verify_ssl' => false
-            ]
-        );
-
-        $dt = $woocommerce->get('products/categories');
+        $woocommerce = new Woocommerce();
         $request_slider =  json_decode(Http::get(config('app.wp_api_url') . 'announcements/?slug=home-page-slider')->body());
         $slider = $request_slider[0]->acf->announcement_slider;
 
-        return view('pages.homepage.main', compact('dt', 'slider'));
+        return view('pages.homepage.main', compact('slider'));
     }
 
     /**
