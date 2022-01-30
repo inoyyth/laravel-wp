@@ -244,6 +244,8 @@ return [
     'wp_base' => env('WP_BASE'),
     'wp_api_url' => env('WP_API_URL'),
     'wp_api_inoy' => env('WP_API_INOY'),
+    'wp_api_auth' => env('WP_API_AUTH'),
     'woocommerce_ck' => env('WOOCOMMERCE_CK'),
     'woocommerce_cs' => env('WOOCOMMERCE_CS'),
+    'jwt_key' => env('JWT_KEY',)
 ];

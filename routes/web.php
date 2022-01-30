@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,23 +17,27 @@ use App\Http\Controllers\HomepageController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::group(['prefix' => '', 'as' => 'homepage.'], function () {
-    Route::get('/',  [HomepageController::class, 'index'])->name('main');
+    Route::get('/', [HomepageController::class, 'index'])->name('main');
 });
 
 Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
-    Route::get('/',  [ProductController::class, 'index'])->name('main');
-    // Route::get('/data-table', ['uses' => 'TimeManagementController@index'])->name('data-table');
-    // Route::get('/print', ['uses' => 'TimeManagementController@print'])->name('print');
+    Route::get('/', [ProductController::class, 'index'])->name('main');
 });
 
 Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
-    Route::get('/{slug}',  [ProductController::class, 'index'])->name('main');
-    // Route::get('/data-table', ['uses' => 'TimeManagementController@index'])->name('data-table');
-    // Route::get('/print', ['uses' => 'TimeManagementController@print'])->name('print');
+    Route::get('/{slug}', [ProductController::class, 'index'])->name('main');
+});
+
+Route::get('login/', [UserController::class, 'index'])->name('login');
+Route::post('login/', [UserController::class, 'userValidate'])->name('user_validation');
+Route::get('logout/', [UserController::class, 'userLogout'])->name('user_logout');
+
+Route::group(['prefix' => 'customer', 'as' => 'customer.', 'middleware' => ['ensure.customer']], function () {
+    Route::get('/', [CustomerController::class, 'index'])->name('main');
 });
 

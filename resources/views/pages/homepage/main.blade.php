@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
 
-    <!-- Featured Start -->
-    <!-- @include('pages.homepage.component.slider') -->
-    <!-- Featured End -->
+    <!-- Slider Start -->
+    @include('pages.homepage.component.slider')
+    <!-- Slider End -->
 
     <!-- Featured Start -->
     @include('pages.homepage.component.featured')
@@ -38,4 +38,4 @@
     <!-- Vendor Start -->
     @include('pages.homepage.component.vendor')
     <!-- Vendor End -->
-    @endsection
+@endsection
