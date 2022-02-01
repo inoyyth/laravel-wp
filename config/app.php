@@ -247,5 +247,7 @@ return [
     'wp_api_auth' => env('WP_API_AUTH'),
     'woocommerce_ck' => env('WOOCOMMERCE_CK'),
     'woocommerce_cs' => env('WOOCOMMERCE_CS'),
-    'jwt_key' => env('JWT_KEY',)
+    'jwt_key' => env('JWT_KEY'),
+    'basic_auth_username' => env('BASIC_AUTH_USERNAME'),
+    'basic_auth_password' => env('BASIC_AUTH_PASSWORD'),
 ];

@@ -36,6 +36,8 @@ Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
 Route::get('login/', [UserController::class, 'index'])->name('login');
 Route::post('login/', [UserController::class, 'userValidate'])->name('user_validation');
 Route::get('logout/', [UserController::class, 'userLogout'])->name('user_logout');
+Route::get('register/', [UserController::class, 'userRegister'])->name('register');
+Route::post('register/', [UserController::class, 'userRegisterValidate'])->name('user_register_validate');
 
 Route::group(['prefix' => 'customer', 'as' => 'customer.', 'middleware' => ['ensure.customer']], function () {
     Route::get('/', [CustomerController::class, 'index'])->name('main');
