@@ -16,7 +16,7 @@ class Woocommerce
       $woocommerce = new Client(
         config('app.wp_base'),
         config('app.woocommerce_ck'),
-        config('app.woocommerce_sk'),
+        config('app.woocommerce_cs'),
         [
             'wp_api' => true,
             'version' => 'wc/v3',

@@ -41,5 +41,8 @@ Route::post('register/', [UserController::class, 'userRegisterValidate'])->name(
 
 Route::group(['prefix' => 'customer', 'as' => 'customer.', 'middleware' => ['ensure.customer']], function () {
     Route::get('/', [CustomerController::class, 'index'])->name('main');
+    Route::post('update-profile-picture/', [CustomerController::class, 'updateProfilePicture'])->name('update_profile_picture');
+    Route::put('change-password/', [CustomerController::class, 'changePassword'])->name('change_password');
+    Route::put('update-profile/', [CustomerController::class, 'updateProfile'])->name('update_profile');
 });
 

@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Library\Services\CloudinaryStorage;
+use App\Library\Services\Woocommerce;
+use Illuminate\Support\Facades\Http;
 
+/**
+ * [Description CustomerController]
+ */
 class CustomerController extends Controller
 {
     /**
@@ -11,74 +17,88 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.customer.main');
+        $session_user = $request->session()->get('user');
+        $woocommerce = new Woocommerce();
+        $user = $woocommerce->get('customers/' . $session_user->id);
+
+        return view('pages.customer.main', compact('user'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function updateProfilePicture(Request $request) {
+        $image = $request->file('profileImage');
+        $upload = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName()); 
+        $session_user = $request->session()->get('user');
+        
+        try {
+            $update_image = Http::put(config('app.wp_api_inoy') . 'profile-picture/'.$session_user->id, array('image_url' => $upload));
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            if ($update_image->status() == 200) {
+                return response()->json([
+                    'message' => 'success',
+                    'data' => $update_image->json()
+                ], 201);
+            } else {
+                return response()->json([
+                    'message' => $update_image->json()
+                ], $update_image->status());
+            }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => $e->message
+            ],500);
+        }
     }
-
+    
     /**
-     * Show the form for editing the specified resource.
+     * changePassword
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  mixed $request
+     * @return json
      */
-    public function edit($id)
-    {
-        //
-    }
+    public function changePassword(Request $request) {
+        $session_user = $request->session()->get('user');
+        $validator = \Validator::make($request->all(), [
+            'password' => 'required|min:6'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'errors'=>$validator->errors()->all()
+                ], 
+                422
+            );
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $params = [
+            'password' => $request->password
+        ];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $auth_key = base64_encode(config('app.basic_auth_username') . ':' . config('app.basic_auth_password'));
+
+        try {
+            $response = Http::withHeaders(
+                [
+                    'Authorization' => 'Basic ' . $auth_key,
+                ])
+                ->post(config('app.wp_api_url') . 'users/' . $session_user->id , $params);
+
+            if ($response->status() == 200) {
+                return response()->json([
+                    'message' => 'success'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => $response->json()
+                ], $register->status());
+            }
+
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => $e->message
+            ],500);
+        }
     }
 }

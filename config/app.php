@@ -230,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'SharedHelper' => App\Helper\SharedHelper::class,
+        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
     ],
     /*
     |--------------------------------------------------------------------------
