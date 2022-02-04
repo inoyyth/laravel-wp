@@ -101,4 +101,98 @@ class CustomerController extends Controller
             ],500);
         }
     }
+
+    public function updateProfile(Request $request) {
+        $session_user = $request->session()->get('user');
+        $validator = \Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'birth_date' => 'required',
+            'gender' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'errors'=>$validator->errors()->all()
+                ], 
+                422
+            );
+        }
+
+        $params = [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'birth_date' => $request->birth_date,
+            'gender' => $request->gender
+        ];
+
+        $auth_key = base64_encode(config('app.basic_auth_username') . ':' . config('app.basic_auth_password'));
+
+        try {
+            $response = Http::withHeaders(
+                [
+                    'Authorization' => 'Basic ' . $auth_key,
+                ])
+                ->post(config('app.wp_api_url') . 'users/' . $session_user->id , $params);
+
+            if ($response->status() == 200) {
+                return response()->json([
+                    'message' => 'success'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => $response->json()
+                ], $register->status());
+            }
+
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => $e->message
+            ],500);
+        }
+    }
+
+    public function updateContact(Request $request) {
+        $session_user = $request->session()->get('user');
+        $validator = \Validator::make($request->all(), [
+            'phone_number' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'errors'=>$validator->errors()->all()
+                ], 
+                422
+            );
+        }
+
+        $params = [
+            'phone_number' => $request->phone_number,
+        ];
+
+        $auth_key = base64_encode(config('app.basic_auth_username') . ':' . config('app.basic_auth_password'));
+
+        try {
+            $response = Http::withHeaders(
+                [
+                    'Authorization' => 'Basic ' . $auth_key,
+                ])
+                ->post(config('app.wp_api_url') . 'users/' . $session_user->id , $params);
+
+            if ($response->status() == 200) {
+                return response()->json([
+                    'message' => 'success'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => $response->json()
+                ], $register->status());
+            }
+
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => $e->message
+            ],500);
+        }
+    }
 }
