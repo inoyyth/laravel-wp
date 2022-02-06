@@ -11,6 +11,9 @@
           @if(Route::current()->getName() == 'customer.main')
             @include('pages.customer.component.profile')
           @endif
+          @if(Route::current()->getName() == 'customer.address')
+            @include('pages.customer.component.address')
+          @endif
         </div>
       </div>
     </div>

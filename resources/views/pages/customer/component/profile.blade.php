@@ -93,7 +93,7 @@
         <div id="success_change_password"></div>
         <form name="updatePasswordForm" id="updatePasswordForm" novalidate="novalidate">
           <div class="control-group">
-              <input type="password" class="form-control" name="password" id="password" placeholder="Your Password"
+              <input type="password" class="form-control" name="password" id="password" placeholder="Your New Password"
                   required="required" data-validation-required-message="Please enter your password" />
               <p class="help-block text-danger"></p>
           </div>

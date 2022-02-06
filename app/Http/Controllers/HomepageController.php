@@ -1,11 +1,17 @@
 <?php
-
+/**
+ * Author Inoy <supri@gmail.com>
+ * since 2022.03.01
+*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Library\Services\Woocommerce;
 
+/**
+ * [Description HomepageController]
+ */
 class HomepageController extends Controller
 {
     /**

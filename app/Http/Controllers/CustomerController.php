@@ -9,13 +9,16 @@ use Illuminate\Support\Facades\Http;
 
 /**
  * [Description CustomerController]
+ * Author Inoy <supri170845@gmailcom>
+ * since 2022.02.01
  */
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     * @return void
      */
     public function index(Request $request)
     {
@@ -25,7 +28,13 @@ class CustomerController extends Controller
 
         return view('pages.customer.main', compact('user'));
     }
-
+    
+    /**
+     * updateProfilePicture: Update user profile picture
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
     public function updateProfilePicture(Request $request) {
         $image = $request->file('profileImage');
         $upload = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName()); 
@@ -53,10 +62,10 @@ class CustomerController extends Controller
     }
     
     /**
-     * changePassword
+     * changePassword: change user password
      *
-     * @param  mixed $request
-     * @return json
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
      */
     public function changePassword(Request $request) {
         $session_user = $request->session()->get('user');
@@ -101,7 +110,13 @@ class CustomerController extends Controller
             ],500);
         }
     }
-
+    
+    /**
+     * updateProfile: update user profile
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
     public function updateProfile(Request $request) {
         $session_user = $request->session()->get('user');
         $validator = \Validator::make($request->all(), [
@@ -151,7 +166,13 @@ class CustomerController extends Controller
             ],500);
         }
     }
-
+    
+    /**
+     * updateContact
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
     public function updateContact(Request $request) {
         $session_user = $request->session()->get('user');
         $validator = \Validator::make($request->all(), [
@@ -189,6 +210,59 @@ class CustomerController extends Controller
                 ], $register->status());
             }
 
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => $e->message
+            ],500);
+        }
+    }
+
+    /**
+     * [Description for getAddress]
+     *
+     * @param  \Illuminate\Http\Request
+     * 
+     * @return void
+     * 
+     */
+    public function getAddress(Request $request)
+    {
+        $session_user = $request->session()->get('user');
+        $auth_key = base64_encode(config('app.basic_auth_username') . ':' . config('app.basic_auth_password'));
+
+        $response = Http::withHeaders(
+            [
+                'Authorization' => 'Basic ' . $auth_key,
+            ])
+            ->get(config('app.wp_api_url') . 'users/' . $session_user->id);
+
+        $user = json_decode($response->body());
+
+        return view('pages.customer.main', compact('user'));
+    }
+
+    /**
+     * [Description for setDefaultAddress]
+     *
+     * @param  \Illuminate\Http\Request
+     * @return void
+     * 
+     */
+    public function setDefaultAddress(Request $request) {
+        $session_user = $request->session()->get('user');
+        $id = $request->id;
+        $length = $request->data_length;
+        $auth_key = base64_encode(config('app.basic_auth_username') . ':' . config('app.basic_auth_password'));
+        $data = [];
+        for ($i=0; $i < $length; $i++) {
+            $data['customer_shipping_address_'.$i.'_customer_shipping_address_is_main_address'] = ($id == $i ? 1 : 0);
+        }
+        try {
+            $response = Http::put(config('app.wp_api_inoy') . 'set-default-address/' . $session_user->id, $data);
+            
+            return response()->json([
+                'message' => 'success'
+            ], 200);
         } catch (Throwable $e) {
             return response()->json([
                 'message' => $e->message

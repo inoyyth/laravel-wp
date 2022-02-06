@@ -1,6 +1,6 @@
 <div class="list-group">
-  <a href="#" class="list-group-item list-group-item-action {{ Route::current()->getName() == 'customer.main' ? 'active' : '' }}">Profile</a>
-  <a href="#" class="list-group-item list-group-item-action">Address Info</a>
+  <a href="{{ route('customer.main') }}" class="list-group-item list-group-item-action {{ Route::current()->getName() == 'customer.main' ? 'active' : '' }}">Profile</a>
+  <a href="{{ route('customer.address') }}" class="list-group-item list-group-item-action {{ Route::current()->getName() == 'customer.address' ? 'active' : '' }}">Address Info</a>
   <a href="#" class="list-group-item list-group-item-action">Billing Info</a>
   <a class="list-group-item list-group-item-action">Bank Account</a>
   <a class="list-group-item list-group-item-action">Notification</a>

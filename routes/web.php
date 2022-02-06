@@ -45,5 +45,7 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.', 'middleware' => ['ens
     Route::put('change-password/', [CustomerController::class, 'changePassword'])->name('change_password');
     Route::put('update-profile/', [CustomerController::class, 'updateProfile'])->name('update_profile');
     Route::put('update-contact/', [CustomerController::class, 'updateContact'])->name('update_contact');
+    Route::get('/address', [CustomerController::class, 'getAddress'])->name('address');
+    Route::put('/set-default-address', [CustomerController::class, 'setDefaultAddress'])->name('set_default_address');
 });
 

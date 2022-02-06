@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+/**
+ * [Description ProductController]
+ * Author Inoy <supri170845@gmail.com>
+ * since 2022.03.01
+*/
 class ProductController extends Controller
 {
     /**
