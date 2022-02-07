@@ -9,7 +9,7 @@
               {{ $item->customer_shipping_address_is_main_address ? '(Main Address)' : '' }}
             </span>
           </h6>
-          <button class="btn btn-warning btn-sm" id="editProfiletBtn" data-toggle="modal" data-target="#changeProfileModal">Edit</button>
+          <button class="btn btn-warning btn-sm" id="editProfiletBtn" data-toggle="modal" data-target="#changeAddresseModal">Edit</button>
         </div>
       </div>
         <div class="card-body">
@@ -36,12 +36,12 @@
   </div>
 </div>
 
-<!-- Modal update password-->
-<div class="modal fade" id="changePasswordeModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+<!-- Modal update address-->
+<div class="modal fade" id="changeAddresseModal" tabindex="-1" role="dialog" aria-labelledby="changeAddressModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Update Address</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -50,18 +50,91 @@
         <div id="success_change_password"></div>
         <form name="updatePasswordForm" id="updatePasswordForm" novalidate="novalidate">
           <div class="control-group">
-              <input type="password" class="form-control" name="password" id="password" placeholder="Your New Password"
-                  required="required" data-validation-required-message="Please enter your password" />
+            <label for="name">Address Name</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Your Address Name"
+                required="required" data-validation-required-message="Please enter your address name" />
+            <p class="help-block text-danger"></p>
+          </div>
+          <div class="form-row">
+            <div class="control-group col-lg-6">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Your First Name"
+                    required="required" data-validation-required-message="Please enter your first name" />
+                <p class="help-block text-danger"></p>
+            </div>
+            <div class="control-group col-lg-6">
+              <label for="last_name">Last Name</label>
+              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Your Last Name"
+                  required="required" data-validation-required-message="Please enter your last name" />
               <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="control-group col-lg-6">
+                <label for="company">Company</label>
+                <input type="text" class="form-control" name="company" id="company" placeholder="Your Company"
+                    required="required" data-validation-required-message="Please enter your company" />
+                <p class="help-block text-danger"></p>
+            </div>
+            <div class="control-group col-lg-6">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"
+                  required="required" data-validation-required-message="Please enter your email" />
+              <p class="help-block text-danger"></p>
+            </div>
           </div>
           <div class="control-group">
-            <input type="password" class="form-control" name="cpassword" id="cpassword" placeholder="Retype Password"
-                data-validation-match-match="password" 
-                data-validation-match-message="Password not match" 
-                data-validation-match-match
-                required="required" data-validation-required-message="Please retype your password" />
+            <label for="address_line_1">Address Line 1</label>
+            <input type="text" class="form-control" name="address_line_1" id="address_line_1" placeholder="Your Address Line 1"
+                required="required" data-validation-required-message="Please enter your address line 1" />
             <p class="help-block text-danger"></p>
-        </div>
+          </div>
+          <div class="control-group">
+            <label for="address_line_2">Address Line 2</label>
+            <input type="text" class="form-control" name="address_line_2" id="address_line_2" placeholder="Your Address Line 2"
+                required="required" data-validation-required-message="Please enter your address line 2" />
+            <p class="help-block text-danger"></p>
+          </div>
+          <div class="control-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone Number"
+                required="required" data-validation-required-message="Please enter your phone number" />
+            <p class="help-block text-danger"></p>
+          </div>
+          <div class="form-row">
+            <div class="control-group col-lg-6">
+                <label for="province">Province</label>
+                <select class="form-control" name="province" id="province" placeholder="Your Province"
+                    required="required" data-validation-required-message="Please select your province">
+                  <option value="">Select Province</option>
+                </select>
+                <p class="help-block text-danger"></p>
+            </div>
+            <div class="control-group col-lg-6">
+              <label for="city">City</label>
+              <select class="form-control" name="city" id="city" placeholder="Your City"
+                  required="required" data-validation-required-message="Please select your city">
+                <option value="">Select City</option>
+              </select>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="control-group col-lg-6">
+                <label for="district">District</label>
+                <select class="form-control" name="district" id="district" placeholder="Your District"
+                    required="required" data-validation-required-message="Please select your district">
+                  <option value="">Select District</option>
+                </select>
+                <p class="help-block text-danger"></p>
+            </div>
+            <div class="control-group col-lg-6">
+              <label for="zip">Zip/Postal</label>
+              <input type="number" class="form-control" name="zip" id="zip" placeholder="Your Zip/Postal"
+                  required="required" data-validation-required-message="Please enter your zip/postal" />
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
